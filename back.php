@@ -16,6 +16,7 @@ if(!isset($_SESSION['admin'])){
     <link rel="stylesheet" href="./css/css.css">
     <link href="./css/s2.css" rel="stylesheet" type="text/css">
     <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/js.js"></script>
 </head>
 
 <body>
@@ -36,11 +37,11 @@ if(!isset($_SESSION['admin'])){
         </div>
         <div id="mm">
             <div class="ct a rb" style="position:relative; width:101.5%; left:-1%; padding:3px; top:-9px;">
-                <a href="?do=admin&redo=tit">網站標題管理</a>|
-                <a href="?do=admin&redo=go">動態文字管理</a>|
-                <a href="?do=admin&redo=rr">預告片海報管理</a>|
-                <a href="?do=admin&redo=vv">院線片管理</a>|
-                <a href="?do=admin&redo=order">電影訂票管理</a>
+                <a href="?do=tit">網站標題管理</a>|
+                <a href="?do=go">動態文字管理</a>|
+                <a href="?do=poster">預告片海報管理</a>|
+                <a href="?do=movie">院線片管理</a>|
+                <a href="?do=order">電影訂票管理</a>
             </div>
             <?php
             if(file_exists('./back/'.$do.'.php')){

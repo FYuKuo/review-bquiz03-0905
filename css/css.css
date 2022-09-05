@@ -250,6 +250,11 @@ input:focus
 	margin-bottom: 10px;
 }
 
+.mx-5 {
+	margin-right: 5px;
+	margin-left: 5px;
+}
+
 .d-f {
 	display: flex;
 }
@@ -274,4 +279,18 @@ input:focus
 	font-size: 18px;
 	padding: 10px;
 	font-weight: bold;
+}
+
+.white {
+	background-color: white;
+}
+
+.over-aut {
+	overflow: auto;
+}
+
+.poster_list {
+	height: 190px;
+	/* background-color: white; */
+
 }
