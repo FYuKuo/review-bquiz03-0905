@@ -1,6 +1,9 @@
 <?php
 include('./api/base.php');
 $do = ($_GET['do'])??'main';
+if(!isset($_SESSION['admin'])){
+  to('./index.php');
+}
 ?>
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -21,10 +24,10 @@ $do = ($_GET['do'])??'main';
             <h1>ABC影城</h1>
         </div>
         <div id="top2">
-            <a href="03P01.htm">首頁</a>
-            <a href="03P02.htm">線上訂票</a>
+        <a href="./index.php">首頁</a>
+            <a href="./index.php?do=order">線上訂票</a>
             <a href="#">會員系統</a>
-            <a href="03P03.htm">管理系統</a>
+            <a href="./index.php?do=login">管理系統</a>
         </div>
         <div id="text"> <span class="ct">最新活動</span>
             <marquee direction="right">
