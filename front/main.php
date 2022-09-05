@@ -7,7 +7,7 @@
                 $posters = $Poster->all(['sh'=>1]," ORDER BY `rank` ");
                 foreach ($posters as $key => $poster) {
                 ?>
-                <div class="poster_item p-a d-f f-w j-c ct" data-ani="<?=$poster['ani']?>">
+                <div class="poster_item p-a d-f f-w j-c ct" data-ani="<?=$poster['ani']?>" data-id="<?=$poster['id']?>">
                     <img src="./upload/<?=$poster['img']?>" alt="" style="height: 250px;">
                     <div class="w-100">
                         <?=$poster['name']?>
@@ -39,13 +39,74 @@
 </div>
 <div class="half">
     <h1>院線片清單</h1>
-    <div class="rb tab" style="width:95%;">
-        <table>
-            <tbody>
-                <tr> </tr>
-            </tbody>
-        </table>
-        <div class="ct"> </div>
+    <div class="rb tab d-f a-c f-w j-c" style="width:95%;">
+        <?php
+        $nowDate =date('Y-m-d');
+        $startDate =date('Y-m-d',strtotime('-2 days'));
+        $num = $Movie->math('COUNT','id'," WHERE `sh` = 1 AND `date` BETWEEN '$startDate' AND '$nowDate'");
+        $limit = 4;
+        $pages = ceil($num/$limit);
+        $page = ($_GET['page'])??1;
+        if($page <= 0 || $page > $pages){
+            $page = 1;
+        }
+        $start = ($page-1)*$limit;
+        $movies = $Movie->all(" WHERE `sh` = 1 AND `date` BETWEEN '$startDate' AND '$nowDate' ORDER BY `rank` Limit $start,$limit");
+        foreach ($movies as $key => $movie) {
+            switch ($movie['type']) {
+                case 1:
+                    $type = '普遍級';
+                break;
+                case 2:
+                    $type = '保護級';
+                break;
+                case 3:
+                    $type = '輔導級';
+                break;
+                case 4:
+                    $type = '限制級';
+                break;
+                
+            }
+        ?>
+            <div class="d-f a-c f-w w-50 my-10">
+                <div class="w-40 d-f a-c">
+                    <img src="./upload/<?=$movie['img']?>" alt="" style="height: 80px;">
+                </div>
+                <div class="w-60" style="font-size: 12px;">
+                    <div><?=$movie['name']?></div>
+                    <div>分級:<img src="./icon/03C0<?= $movie['type'] ?>.png" alt="" style="width: 20px;"><?=$type?></div>
+                    <div>上映日期：<?=$movie['date']?></div>
+                </div>
+                <div class="w-100 ct my-10">
+                    <input type="button" value="劇情簡介" onclick="location.href='?do=intro&id=<?=$movie['id']?>'">
+                    <input type="button" value="線上訂票" onclick="location.href='?do=order&id=<?=$movie['id']?>'">
+                </div>
+            </div>
+        <?php
+        }
+        ?>
+        
+
+        <div class="ct page">
+            <?php
+            if($page > 1){
+            ?>
+            <a href="?page=<?=$page-1?>">&lt;</a>
+            <?php
+            }
+            for ($i=1; $i <= $pages ; $i++) { 
+            ?>
+            <a href="?page=<?=$i?>" class="<?=($page == $i)?'nowPage':''?>"><?=$i?></a>
+            <?php
+            }
+            if($page < $pages){
+            ?>
+            <a href="?page=<?=$page+1?>">&gt;</a>
+            <?php
+            }
+            ?>
+        </div>
     </div>
 </div>
 
@@ -71,9 +132,9 @@
             next = $('.poster_item').eq(num);
         }
 
-        let ani = $(next).data('ani');
+        let ani = next.data('ani');
 
-        // console.log(next);
+        // console.log($(next).data('id'));
         // console.log(ani);
 
         switch (ani) {
@@ -83,8 +144,8 @@
                 })
             break;
             case 2:
-                $(now).slideDown(2000,()=>{
-                    $(next).slideUp(2000)
+                $(now).slideUp(2000,()=>{
+                    $(next).slideDown(2000)
                 })
             break;
             case 3:
@@ -131,7 +192,7 @@
     $('.img_item').hover(function(){
         clearInterval(setAni);
     },function(){
-        let setAni = setInterval(()=>{
+        setAni = setInterval(()=>{
         ani()
         },3000)
     })

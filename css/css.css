@@ -313,3 +313,12 @@ input:focus
 	/* background-color: white; */
 
 }
+
+.page a{
+	text-decoration: none;
+	color: white;
+}
+
+.nowPage{
+	font-size: 1.5rem;
+}
