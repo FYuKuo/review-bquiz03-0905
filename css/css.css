@@ -262,6 +262,10 @@ input:focus
 	display: flex;
 }
 
+.f-w {
+	flex-wrap: wrap;
+}
+
 .a-c {
 	align-items: center;
 }
@@ -300,6 +304,12 @@ input:focus
 
 .movie_list {
 	height: 420px;
+	/* background-color: white; */
+
+}
+
+.order_list {
+	height: 330px;
 	/* background-color: white; */
 
 }
