@@ -8,6 +8,7 @@ $tmp = $now['rank'];
 $now['rank'] = $change['rank'];
 $change['rank'] = $tmp;
 
+
 $DB->save($now);
 $DB->save($change);
 ?>
