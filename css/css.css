@@ -322,3 +322,11 @@ input:focus
 .nowPage{
 	font-size: 1.5rem;
 }
+
+table.p-5 td{
+	padding: 5px;
+}
+
+.book {
+	display: none;
+}
