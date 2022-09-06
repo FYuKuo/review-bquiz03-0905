@@ -330,3 +330,39 @@ table.p-5 td{
 .book {
 	display: none;
 }
+
+.set_bg {
+	background-image: url(../icon/03D04.png);
+	/* background-position: center; */
+	background-repeat: no-repeat;
+	width: 540px;
+	height: 370px;
+	margin: auto;
+}
+
+.set_group {
+	width: 315px;
+	height: 345px;
+	margin: auto;
+	padding-top: 15px;
+	/* background-color: #ccc; */
+}
+
+.set {
+	width: calc(315px / 5);
+	height: calc(345px / 4);
+	background-image: url(../icon/03D02.png);
+	background-position: center;
+	background-repeat: no-repeat;
+
+}
+
+.hasPeople {
+	background-image: url(../icon/03D03.png);
+
+}
+
+.order_item {
+	border-bottom: 1px solid black;
+	padding: 10px 0;
+}

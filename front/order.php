@@ -1,3 +1,6 @@
+<?php
+$id = ($_GET['id'])??0;
+?>
 <div class="rb ct title">線上訂票</div>
 
 <div class="order">
@@ -18,7 +21,7 @@
             <tr class="grey3">
                 <td colspan="2">
                     <input type="button" value="確定" onclick="book()">
-                    <input type="button" value="重置" onclick="">
+                    <input type="button" value="重置" onclick="getMovie()">
                 </td>
             </tr>
         </table>
@@ -30,44 +33,95 @@
 </div>
 
 <script>
-    getMovie();
+getMovie();
+let setArr = new Array();
 
-    function getMovie(){
-        $.get('./api/get_movie.php',(res)=>{
-            $('#movie').html(res);
-            let movie = $('#movie').val();
-            getDate(movie)
-        })
-    }
-
-    function getDate(movie){
-        $.get('./api/get_date.php',{movie},(res)=>{
-            $('#date').html(res);
-            // console.log(res);
-            let date = $('#date').val();
-
-            getSession(movie,date)
-        })
-    }
-
-    function getSession(movie,date){
-        $.get('./api/get_session.php',{movie,date},(res)=>{
-            $('#session').html(res);
-
-            // console.log(res);
-        })
-    }
-
-    $('#movie').on('change',function(){
-        let movie = $(this).val();
-        getDate(movie)
-        // console.log(movie);
-    })
-
-    $('#date').on('change',function(){
+function getMovie() {
+    let id = <?=$id;?>;
+    $.get('./api/get_movie.php',{id} ,(res) => {
+        $('#movie').html(res);
         let movie = $('#movie').val();
-        let date = $(this).val();
-        getSession(movie,date)
+        getDate(movie)
     })
-</script>
+}
 
+function getDate(movie) {
+    $.get('./api/get_date.php', {
+        movie
+    }, (res) => {
+        $('#date').html(res);
+        // console.log(res);
+        let date = $('#date').val();
+
+        getSession(movie, date)
+    })
+}
+
+function getSession(movie, date) {
+    $.get('./api/get_session.php', {
+        movie,
+        date
+    }, (res) => {
+        $('#session').html(res);
+
+        // console.log(res);
+    })
+}
+
+$('#movie').on('change', function() {
+    let movie = $(this).val();
+    getDate(movie)
+    // console.log(movie);
+})
+
+$('#date').on('change', function() {
+    let movie = $('#movie').val();
+    let date = $(this).val();
+    getSession(movie, date)
+})
+
+function book() {
+    $('.order').hide();
+    $('.book').show();
+    let movie = $('#movie').val();
+    let date = $('#date').val();
+    let session = $('#session').val();
+
+
+    $.get('./api/get_book.php', {
+        movie,
+        date,
+        session
+    }, (res) => {
+        $('.book').html(res);
+        setEvent()
+    })
+}
+
+function setEvent() {
+
+    $('.sets').on('change', function() {
+
+        if ($(this).prop('checked') == true) {
+
+            if (setArr.length < 4) {
+
+                setArr.push($(this).val());
+                $(this).parent().parent().addClass('hasPeople');
+
+            } else {
+                alert('最多僅能訂購四張票');
+                $(this).prop('checked', false);
+            }
+
+        } else {
+            $(this).parent().parent().removeClass('hasPeople');
+            setArr.splice(setArr.indexOf($(this).val()), 1);
+        }
+
+        // console.log(setArr);
+
+        $('.qt').text(setArr.length);
+    })
+}
+</script>
